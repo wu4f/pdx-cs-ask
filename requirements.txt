@@ -1,0 +1,10 @@
+flask
+requests_oauthlib
+gunicorn
+google-cloud-aiplatform
+numpy
+pandas
+pytesseract
+PyPDF2
+textract
+tenacity
