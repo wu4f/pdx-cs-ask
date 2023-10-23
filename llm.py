@@ -99,7 +99,8 @@ def answer_my_question(question):
     )
 
     # Prompt for Q&A which takes the custom context found in last step.
-    prompt = f""" Answer the question using the provided context. \n\n
+    prompt = f""" Answer the question using the provided context. If the answer is
+              not contained in the context, say "answer not available in context" \n\n
                 Context: \n {context}?\n
                 Question: \n {question} \n
                 Answer:

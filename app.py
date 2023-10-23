@@ -14,16 +14,16 @@ app = flask.Flask(__name__)       # our Flask app
 app.secret_key = os.urandom(24)
 
 app.add_url_rule('/',
-                 view_func=Index.as_view('index'),
-                 methods=["GET"])
+                 view_func=Query.as_view('query'),
+                 methods=["GET", 'POST'])
 
 app.add_url_rule('/callback',
                  view_func=Callback.as_view('callback'),
                  methods=["GET"])
 
-app.add_url_rule('/query',
-                 view_func=Query.as_view('query'),
-                 methods=['GET', 'POST'])
+#app.add_url_rule('/query',
+                 #view_func=Query.as_view('query'),
+                 #methods=['GET', 'POST'])
 
 app.add_url_rule('/logout',
                  view_func=Logout.as_view('logout'),
