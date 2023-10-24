@@ -13,7 +13,8 @@ class Query(MethodView):
         if True:
             #google = OAuth2Session(client_id, token=session['oauth_token'])
             #userinfo = google.get('https://www.googleapis.com/oauth2/v3/userinfo').json()
-            return render_template('query.html', name=userinfo['name'], email=userinfo['email'], picture=userinfo['picture'])
+            #return render_template('query.html', name=userinfo['name'], email=userinfo['email'], picture=userinfo['picture'])
+            return render_template('query.html')
         else:
         # Redirect to the identity provider and ask the identity provider to return the client
         #   back to /callback route with the code
@@ -38,7 +39,7 @@ class Query(MethodView):
         #if 'oauth_token' in session:
             # Insert based on form fields only if an OAuth2 token is present to ensure
             #   values in all fields exist
-            #myllm.query(request.form['message'])
-            return render_template('query.html',question=request.form['message'],answer="Pretend that LLM gave you this")
+            answer = myllm.query(request.form['message'])
+            return render_template('query.html',question=request.form['message'],answer=answer)
         else:
             return redirect(url_for('query'))
