@@ -1,3 +1,4 @@
+# Derived from https://github.com/GoogleCloudPlatform/generative-ai/blob/main/language/use-cases/document-qa/question_answering_documents_langchain_matching_engine.ipynb
 import glob
 import os
 import re
@@ -11,12 +12,12 @@ from vertexai.language_models import TextEmbeddingModel, TextGenerationModel
 
 warnings.filterwarnings("ignore")
 
-@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(3))
+@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(10))
 def text_generation_model_with_backoff(**kwargs):
     return generation_model.predict(**kwargs).text
 
 
-@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(3))
+@retry(wait=wait_random_exponential(min=1, max=20), stop=stop_after_attempt(10))
 def embedding_model_with_backoff(text=[]):
     embeddings = embedding_model.get_embeddings(text)
     return [each.values for each in embeddings][0]
