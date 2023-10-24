@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
     <h2>Ask CS a question</h2>
-    <!--<img src="{{ picture }}" width=25px height=25px referrerpolicy="no-referrer">
-	    {{ name }} &lt;{{ email }}&gt;-->
     <form action="{{ url_for('query') }}" method=post>
 	    <textarea rows=5 cols=50 name=message></textarea></p>
 	    <p><input type=submit value=Query></p>
