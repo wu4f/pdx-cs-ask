@@ -1,5 +1,5 @@
 """
-A simple guestbook flask app.
+A simple retrieval-augmented generation LLM app.
 """
 import flask
 import os
