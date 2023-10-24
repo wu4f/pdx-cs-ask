@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>Ask CS a question</h2>
+    <h2>Ask the CS department a question</h2>
     <form action="{{ url_for('query') }}" method=post>
 	    <textarea rows=5 cols=50 name=message></textarea></p>
 	    <p><input type=submit value=Query></p>
@@ -11,7 +11,7 @@
     <h2>Answer:</h2>
     {{ answer }}
     {% endif %}
-    <h2>Example queries:</h2>
+    <h2>Example questions:</h2>
     <ul>
        <li>What are the requirements for the cybersecurity graduate certificate?
        <li>Are international students eligible for grad prep?
