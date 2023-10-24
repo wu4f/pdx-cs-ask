@@ -1,5 +1,4 @@
 flask
-requests_oauthlib
 gunicorn
 google-cloud-aiplatform
 numpy
