@@ -1,10 +1,5 @@
 {
     "name": "pdx-cs-ask",
-    "env": {
-        "TITLE": {
-            "description": "Ask the CS department"
-        }
-    },
     "options": {
         "allow-unauthenticated": true,
         "memory": "512Mi",
