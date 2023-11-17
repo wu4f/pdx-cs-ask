@@ -1,0 +1,16 @@
+{
+    "name": "pdx-cs-ask",
+    "env": {
+        "TITLE": {
+            "description": "Ask the CS department"
+        }
+    },
+    "options": {
+        "allow-unauthenticated": true,
+        "memory": "512Mi",
+        "cpu": "1",
+        "port": 80,
+        "http2": false,
+        "min-instances": 1
+    }
+}
