@@ -11,6 +11,6 @@
         "cpu": "1",
         "port": 80,
         "http2": false,
-        "min-instances": 1
+        "max-instances": 1
     }
 }
