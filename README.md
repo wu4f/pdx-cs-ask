@@ -5,7 +5,7 @@ Note that the service account used in the Cloud Run deployment must have the Ver
 
 ## Cloud Run instructions for https://askcs.oregonctf.org
 * gcloud builds submit --timeout=900   --tag gcr.io/${GOOGLE_CLOUD_PROJECT}/pdx-cs-ask
-* gcloud run deploy pdx-cs-ask --image gcr.io/${GOOGLE_CLOUD_PROJECT}/pdx-cs-ask --service-account ***Fill in**** --region=us-central1 --allow-unauthenticated --min-instances 1
+* gcloud run deploy pdx-cs-ask --image gcr.io/${GOOGLE_CLOUD_PROJECT}/pdx-cs-ask --service-account ***Fill in*** --region=us-central1 --allow-unauthenticated --min-instances 1
 * gcloud beta run domain-mappings create --service pdx-cs-ask --region us-central1 --domain askcs.oregonctf.org
 
 ## Have a GCP project?
