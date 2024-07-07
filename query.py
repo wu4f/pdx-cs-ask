@@ -4,6 +4,7 @@ from langchain import hub
 from langchain_community.vectorstores import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from langchain.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 import re
 
@@ -27,7 +28,7 @@ class Query(MethodView):
                 persist_directory="./.chromadb"
         )
         llm = GoogleGenerativeAI(model="gemini-1.5-flash")
-        retriever = self.vectorstore.as_retriever()
+        retriever = vectorstore.as_retriever()
 
         prompt_template = """You are an assistant for question-answering tasks. Use the following context to answer the question.  Provide the source URLs of the context you used to perform the task and instruct the user to visit them for more information.  If you don't know the answer, just say that you don't know.
 
