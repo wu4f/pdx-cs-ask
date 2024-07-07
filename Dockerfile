@@ -1,6 +1,7 @@
 # Multi-stage build.  To build the container, you will need to supply your
 # GOOGLE_API_KEY to load the vector database within the final container
-#   docker build --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .
+#  docker build --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .
+#  docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} wuchangfeng/pdx-cs-ask
 
 # Use an official Python runtime as a parent image
 FROM python:3.10-slim as builder
@@ -37,6 +38,4 @@ COPY --from=builder /usr/local/lib/python3.10/site-packages/ /usr/local/lib/pyth
 WORKDIR /app
 
 # Launch gunicorn
-CMD gunicorn --bind :$PORT --workers 1 --threads 8 app:app
-
-#CMD python3 gunicorn --bind :$PORT --workers 1 --threads 8 app:app
+CMD python3 -m gunicorn --bind :$PORT --workers 1 --threads 8 app:app
