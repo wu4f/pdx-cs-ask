@@ -1,7 +1,10 @@
 # Multi-stage build.  To build the container, you will need to supply your
 # GOOGLE_API_KEY to load the vector database within the final container
 #  docker build --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .
-#  docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} wuchangfeng/pdx-cs-ask
+#  docker login
+#  docker push wuchangfeng/pdx-cs-ask
+#  Run locally: docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} wuchangfeng/pdx-cs-ask
+#  Run on Cloud Run: gcloud run deploy test-pdx-cs-ask --image wuchangfeng/pdx-cs-ask --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" --region=us-central1 --allow-unauthenticated --min-instances 1
 
 # Use an official Python runtime as a parent image
 FROM python:3.10-slim as builder
