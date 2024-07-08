@@ -1,8 +1,6 @@
 # pdx-cs-ask
 Source code for the "Ask the CS department a question" site at https://askcs.oregonctf.org.  The site relies on Google's embedding and large-language models to operate.  You must have a valid GOOGLE_API_KEY with access to Gemini APIs in order to run.
 
-#  docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} wuchangfeng/pdx-cs-ask
-
 ## Container building instructions
 Set the GOOGLE_API_KEY environment variable.  This is required for building the container in order to embed the documents into the vector database.
 * export GOOGLE_API_KEY="..."
