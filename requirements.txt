@@ -1,9 +1,10 @@
 flask
 gunicorn
-google-cloud-aiplatform
-numpy
-pandas
-pytesseract
-PyPDF2
-textract
-tenacity
+bs4
+langchain
+langchainhub
+langchain-community
+langchain_google_genai
+grpcio
+chromadb
+unidecode
