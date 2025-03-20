@@ -5,6 +5,7 @@ langchain
 langchainhub
 langchain-community
 langchain_google_genai
+langchain-chroma
 grpcio
 chromadb
 unidecode
