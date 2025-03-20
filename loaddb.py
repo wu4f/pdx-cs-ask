@@ -1,7 +1,7 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_community.document_transformers import BeautifulSoupTransformer
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -27,10 +27,10 @@ def clean_documents(documents):
         doc.page_content = clean_text(doc.page_content)
     return documents
 
-def scrape_articles(links):
+def scrape_articles(links, headers):
     """Scrapes list of links, extracts article text, returns Documents"""
     # Scrape list of links
-    loader = AsyncHtmlLoader(links)
+    loader = AsyncHtmlLoader(links, header_template=headers)
     docs = loader.load()
     # Extract article tag
     transformer = BeautifulSoupTransformer()
@@ -49,10 +49,13 @@ def load_db(vectorstore):
     # Gets all the relevent URLs from the CS department landing page,
     # scrapes them, chunks them, then adds them to vector database
     cs_website = "https://www.pdx.edu/computer-science"
-    resp = requests.get(cs_website)
+    headers = {
+        'User-Agent' : 'PDXAcademicClient/pdx-cs-ask'
+    }
+    resp = requests.get(cs_website, headers=headers)
     soup = BeautifulSoup(resp.text,"html.parser")
     links = list({urljoin(cs_website,a['href']) for a in soup.find_all('a', href=True) if any(['computer-science' in a['href'], 'security' in a['href']])})
-    documents = scrape_articles(links)
+    documents = scrape_articles(links, headers)
     chunks = chunking(documents)
     add_documents(vectorstore, chunks, 300)
 
