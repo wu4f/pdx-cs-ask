@@ -1,7 +1,7 @@
 from flask import redirect, request, url_for, render_template, session
 from flask.views import MethodView
 from langchain import hub
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain.prompts import PromptTemplate
@@ -27,7 +27,7 @@ class Query(MethodView):
                 embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001", task_type="retrieval_query"),
                 persist_directory="./.chromadb"
         )
-        llm = GoogleGenerativeAI(model="gemini-1.5-flash")
+        llm = GoogleGenerativeAI(model="gemini-2.0-flash")
         retriever = vectorstore.as_retriever()
 
         prompt_template = """You are an assistant for question-answering tasks. Use the following context to answer the question.  Provide the source URLs of the context you used to perform the task and instruct the user to visit them for more information.  If you don't know the answer, just say that you don't know.
