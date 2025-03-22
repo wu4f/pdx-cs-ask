@@ -1,5 +1,3 @@
-flask
-gunicorn
 bs4
 langchain
 langchainhub
@@ -9,3 +7,4 @@ langchain-chroma
 grpcio
 chromadb
 unidecode
+chainlit
