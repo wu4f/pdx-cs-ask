@@ -35,5 +35,5 @@ COPY --from=builder /usr/local /usr/local
 # Set working directory
 WORKDIR /app
 
-# Launch gunicorn
+# Launch chainlit
 CMD chainlit run --port $PORT --host 0.0.0.0 cl.py
