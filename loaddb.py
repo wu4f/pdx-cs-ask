@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 import unidecode
 import requests
 import re
+import os
 
 def chunking(documents):
     """Takes in Documents and splits text into chunks"""
@@ -48,13 +49,15 @@ def add_documents(vectorstore, chunks, n):
 def load_db(vectorstore):
     # Gets all the relevent URLs from the CS department landing page,
     # scrapes them, chunks them, then adds them to vector database
-    cs_website = "https://www.pdx.edu/computer-science"
+    path_name = os.getenv("PATH_NAME")
+    print(f"Path name: {path_name}")
+    website = f"https://www.pdx.edu/{path_name}"
     headers = {
         'User-Agent' : 'PDXAcademicClient/pdx-cs-ask'
     }
-    resp = requests.get(cs_website, headers=headers)
+    resp = requests.get(website, headers=headers)
     soup = BeautifulSoup(resp.text,"html.parser")
-    links = list({urljoin(cs_website,a['href']) for a in soup.find_all('a', href=True) if any(['computer-science' in a['href'], 'security' in a['href']])})
+    links = list({urljoin(website,a['href']) for a in soup.find_all('a', href=True) if path_name in a['href']})
     documents = scrape_articles(links, headers)
     chunks = chunking(documents)
     add_documents(vectorstore, chunks, 300)

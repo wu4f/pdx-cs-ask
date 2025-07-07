@@ -11,6 +11,13 @@ ARG GOOGLE_API_KEY
 # Set environment variable for ingestion script
 ENV GOOGLE_API_KEY=$GOOGLE_API_KEY
 
+# Ingestion script needs PATH_NAME on site to target crawl
+# Pull PATH_NAME from arguments
+ARG PATH_NAME
+
+# Set environment variable for ingestion script
+ENV PATH_NAME=$PATH_NAME
+
 # Set the working directory in the container
 WORKDIR /app
 

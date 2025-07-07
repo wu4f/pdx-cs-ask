@@ -1,10 +1,10 @@
-bs4
+chainlit
 langchain
-langchainhub
 langchain-community
 langchain_google_genai
 langchain-chroma
+langchainhub
 grpcio
 chromadb
 unidecode
-chainlit
+bs4
