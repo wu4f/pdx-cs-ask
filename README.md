@@ -8,7 +8,7 @@ Source code for the Portland State chatbot that scrapes the Drupal site at https
  2.  Set the GOOGLE_API_KEY environment variable.  This is required for building the container in order to embed the documents into the vector database.
 `export GOOGLE_API_KEY="..."`
  3. Build the container.  `gcloud builds submit` does not support passing environment variables in the build so use the Docker CLI to pass the API key in as an environment variable upon building.  Note that this is a multi-stage build and the key is only used to construct the    database.  The final database is copied to the final container, but not the key.
-`docker build --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .`   
+`docker build --build-arg PATH_NAME=$PATH_NAME --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .`   
  4. Login to DockerHub
  `docker login`
  5. Push container image
