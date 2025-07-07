@@ -2,7 +2,7 @@
 # GOOGLE_API_KEY to load the vector database within the final container
 
 # Use an official Python runtime as a parent image
-FROM python:3.12-slim as builder
+FROM python:3.12-slim AS builder
 
 # Ingestion script needs GoogleAI embeddings to insert into vector database.
 # Pull GOOGLE_API_KEY from arguments
