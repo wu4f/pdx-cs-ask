@@ -3,10 +3,12 @@ Source code for the Portland State chatbot that scrapes the Drupal site at https
 
 ## Container building instructions
 
- 1.  Set the PATH_NAME environment variable.  This is required for targeting the chatbot to a particular path within the site.  In the example below, we set it to 'computer-science' to crawl URLs with 'computer-science' in them.
-`export PATH_NAME="computer-science"`
+ 1.  Set the PATH_NAME environment variable.  This is required for targeting the chatbot to a particular path within the site.  In the example below, we set it to 'web.cs.pdx.edu' to crawl URLs from our home page.
+`export PATH_NAME="web.cs.pdx.edu"`
  2.  Set the GOOGLE_API_KEY environment variable.  This is required for building the container in order to embed the documents into the vector database.
 `export GOOGLE_API_KEY="..."`
+ 2.  Set the GOOGLE_MODEL environment variable.  This is required for specifying the model to use.
+`export GOOGLE_MODEL="..."`
  3. Build the container.  `gcloud builds submit` does not support passing environment variables in the build so use the Docker CLI to pass the API key in as an environment variable upon building.  Note that this is a multi-stage build and the key is only used to construct the    database.  The final database is copied to the final container, but not the key.
 `docker build --build-arg PATH_NAME=$PATH_NAME --build-arg GOOGLE_API_KEY=$GOOGLE_API_KEY -f Dockerfile -t wuchangfeng/pdx-cs-ask .`   
  4. Login to DockerHub
@@ -16,12 +18,12 @@ Source code for the Portland State chatbot that scrapes the Drupal site at https
 
 ## Container deployment instructions
 ### Local deployment
-`docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} wuchangfeng/pdx-cs-ask`
+`docker run -it --rm -p 8000:8000 -e PORT=8000 -e GOOGLE_API_KEY=${GOOGLE_API_KEY} -e GOOGLE_MODEL=${GOOGLE_MODEL} wuchangfeng/pdx-cs-ask`
 
 ### Cloud Run deployment
 
  1. Deploy container
-`gcloud run deploy pdx-cs-ask --image wuchangfeng/pdx-cs-ask --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" --region=us-central1 --allow-unauthenticated --min-instances 1`
+`gcloud run deploy pdx-cs-ask --image wuchangfeng/pdx-cs-ask --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY},GOOGLE_MODEL=${GOOGLE_MODEL}" --region=us-central1 --allow-unauthenticated --min-instances 1`
  2. Create mapping for the site
 `gcloud beta run domain-mappings create --service pdx-cs-ask --region us-central1 --domain askcs.oregonctf.org`
 

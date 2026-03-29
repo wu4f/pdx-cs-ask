@@ -1,4 +1,4 @@
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_community.document_transformers import BeautifulSoupTransformer
 from langchain_chroma import Chroma
@@ -28,18 +28,13 @@ def clean_documents(documents):
         doc.page_content = clean_text(doc.page_content)
     return documents
 
-def scrape_articles(links, headers):
+def scrape_content(links, headers):
     """Scrapes list of links, extracts article text, returns Documents"""
     # Scrape list of links
     loader = AsyncHtmlLoader(links, header_template=headers)
     docs = loader.load()
-    # Extract article tag
-    transformer = BeautifulSoupTransformer()
-    docs_tr = transformer.transform_documents(
-        documents=docs, tags_to_extract=["article"]
-    )
-    clean_documents(docs_tr)
-    return docs_tr
+    clean_documents(docs)
+    return docs
 
 def add_documents(vectorstore, chunks, n):
    for i in range(0, len(chunks), n):
@@ -51,14 +46,14 @@ def load_db(vectorstore):
     # scrapes them, chunks them, then adds them to vector database
     path_name = os.getenv("PATH_NAME")
     print(f"Path name: {path_name}")
-    website = f"https://www.pdx.edu/{path_name}"
     headers = {
         'User-Agent' : 'PDXAcademicClient/pdx-cs-ask'
     }
+    website = f"https://{path_name}"
     resp = requests.get(website, headers=headers)
     soup = BeautifulSoup(resp.text,"html.parser")
-    links = list({urljoin(website,a['href']) for a in soup.find_all('a', href=True) if path_name in a['href']})
-    documents = scrape_articles(links, headers)
+    links = list({urljoin(website,a['href']) for a in soup.find_all('a', href=True)})
+    documents = scrape_content(links, headers)
     chunks = chunking(documents)
     add_documents(vectorstore, chunks, 300)
 
@@ -71,7 +66,7 @@ def load_db(vectorstore):
         print(f"  {doc}")
 
 vectorstore = Chroma(
-            embedding_function=GoogleGenerativeAIEmbeddings(model="models/embedding-001", task_type="retrieval_query"),
+            embedding_function=GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", task_type="retrieval_query"),
             persist_directory="./.chromadb"
 )
 load_db(vectorstore)
